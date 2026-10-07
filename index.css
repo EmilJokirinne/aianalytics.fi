@@ -1,0 +1,326 @@
+@import 'tailwindcss';
+
+/* ---------- Fontit (Inter, itse isännöity, Latin-osajoukko) ---------- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./inter-regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./inter-medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('./inter-semibold.woff') format('woff');
+}
+
+/* ---------- Teema ---------- */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --color-ink-950: #060a13;
+  --color-ink-900: #0a111f;
+  --color-ink-800: #111a2c;
+  --color-ink-700: #1a2540;
+  --color-ink-600: #283553;
+
+  --color-mist-50: #f5f7fa;
+  --color-mist-100: #edf0f5;
+  --color-mist-200: #dfe4ec;
+
+  --color-accent-200: #c9d7ff;
+  --color-accent-300: #a3bbff;
+  --color-accent-400: #7495ff;
+  --color-accent-500: #4a72ff;
+  --color-accent-600: #3557e6;
+  --color-accent-700: #2a45b8;
+
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- Perusta ---------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background: var(--color-ink-950);
+}
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: #fff;
+  color: var(--color-ink-900);
+}
+::selection {
+  background: var(--color-accent-500);
+  color: #fff;
+}
+:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ---------- Painikkeet ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.35rem;
+  border-radius: 0.65rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.btn-sm {
+  min-height: 2.4rem;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.85rem;
+}
+.btn-primary {
+  background: var(--color-accent-500);
+  color: #fff;
+  box-shadow: 0 8px 24px -10px rgb(74 114 255 / 0.7);
+}
+.btn-primary:hover {
+  background: var(--color-accent-600);
+}
+.btn-ghost-dark {
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 0.18);
+}
+.btn-ghost-dark:hover {
+  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(255 255 255 / 0.32);
+}
+
+/* ---------- Taustakuviot ---------- */
+.bg-grid-dark {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* ---------- Animaatiot ----------
+   Kaikki piilotukset tehdään vain .js-luokan alla, joten sisältö näkyy myös ilman JavaScriptiä. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.8s var(--ease-soft),
+    transform 0.8s var(--ease-soft);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.js .is-visible .draw {
+  animation: draw 1.8s var(--ease-soft) forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.js .fade-late {
+  opacity: 0;
+}
+.js .is-visible .fade-late {
+  animation: fade-in 0.7s ease forwards 1.1s;
+}
+.js .is-visible .pulse-dot.fade-late {
+  animation:
+    fade-in 0.7s ease forwards 1.1s,
+    pulse 2.6s ease-in-out infinite 1.8s;
+}
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+.pulse-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.6);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+.pulse-ring {
+  animation: ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.js .rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rise 0.9s var(--ease-soft) forwards;
+}
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.float-a,
+.float-b {
+  transform-box: fill-box;
+}
+.float-a {
+  animation: float-a 14s ease-in-out infinite;
+}
+.float-b {
+  animation: float-b 18s ease-in-out infinite;
+}
+@keyframes float-a {
+  50% {
+    transform: translate(7px, -9px);
+  }
+}
+@keyframes float-b {
+  50% {
+    transform: translate(-9px, 6px);
+  }
+}
+
+.flow-line {
+  background-image: linear-gradient(90deg, transparent 0 35%, var(--color-accent-500) 50%, transparent 65% 100%);
+  background-size: 250% 100%;
+  animation: flow-x 2.4s linear infinite;
+}
+.flow-line-v {
+  background-image: linear-gradient(180deg, transparent 0 35%, var(--color-accent-400) 50%, transparent 65% 100%);
+  background-size: 100% 250%;
+  animation: flow-y 2.4s linear infinite;
+}
+@keyframes flow-x {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@keyframes flow-y {
+  from {
+    background-position: 0 100%;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+.bar-grow {
+  transform-origin: left center;
+}
+.js .bar-grow {
+  transform: scaleX(0);
+}
+.js .is-visible .bar-grow {
+  animation: grow-x 1.2s var(--ease-soft) forwards;
+}
+@keyframes grow-x {
+  to {
+    transform: scaleX(1);
+  }
+}
+.bar-grow-y {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.js .bar-grow-y {
+  transform: scaleY(0);
+}
+.js .is-visible .bar-grow-y {
+  animation: grow-y 1s var(--ease-soft) forwards;
+}
+@keyframes grow-y {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* FAQ-vastauksen pehmeä avautuminen */
+details.faq[open] > :not(summary) {
+  animation: faq-open 0.35s var(--ease-soft);
+}
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .js .reveal,
+  .js .rise {
+    opacity: 1;
+    transform: none;
+  }
+  .js .draw {
+    stroke-dashoffset: 0;
+  }
+  .js .fade-late {
+    opacity: 1;
+  }
+  .js .bar-grow,
+  .js .bar-grow-y {
+    transform: none;
+  }
+}
